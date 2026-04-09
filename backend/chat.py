@@ -1,14 +1,31 @@
+from pathlib import Path
+
 from flask import Flask, request, send_file, jsonify, Response
 from flask_cors import CORS
+from dotenv import load_dotenv
 from openai import AzureOpenAI
 import json, os
 
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
+
 app = Flask(__name__)
 CORS(app)
+
+_azure_endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
+_azure_key = os.environ.get("AZURE_OPENAI_API_KEY")
+_api_version = os.environ.get("AZURE_OPENAI_API_VERSION", "2024-02-15-preview")
+_deployment = os.environ.get("AZURE_OPENAI_DEPLOYMENT_NAME", "OurCS35")
+
+if not _azure_endpoint or not _azure_key:
+    raise RuntimeError(
+        "Set AZURE_OPENAI_ENDPOINT and AZURE_OPENAI_API_KEY in a .env file "
+        "(see .env.example in the project root)."
+    )
+
 client = AzureOpenAI(
-    azure_endpoint="https://hybridatelierourcs.openai.azure.com/",
-    api_key="cbb1930b22c44815aa3af29f5ed53c22",
-    api_version="2024-02-15-preview"
+    azure_endpoint=_azure_endpoint,
+    api_key=_azure_key,
+    api_version=_api_version,
 )
 
 @app.before_request
@@ -51,7 +68,7 @@ def strongest():
 
     try:
         completion = client.chat.completions.create(
-        model="OurCS35", # model = "deployment_name"
+        model=_deployment,
         messages = message_text,
         temperature=0.7,
         max_tokens=800,
