@@ -18,7 +18,28 @@ const PokemonCard = ({pokemonID}) => {
     
     return (
         <Card>
-			<img src={data?.sprites?.front_default} alt={`Sprite of ${data?.name}`}></img>
+			<Image src={data?.sprites?.front_default}></Image>
+			<Card.Content>
+				<Card.Header>{data?.name}</Card.Header>
+				{
+					data?.types.map((entry, index) => (
+						<Label key={index}>{entry?.type?.name}</Label>
+					))
+			}
+			<List divided>
+				{
+					data?.stats.map( (entry, index) => (
+						<ListItem key={index}>
+							<List.Content>{entry.stat.name}</List.Content>
+							<List.Content floated='right'>{entry?.base_stat}</List.Content>
+						</ListItem>
+					)
+
+					)
+				}
+			</List>
+			</Card.Content>
+			{/* <img src={data?.sprites?.front_default} alt={`Sprite of ${data?.name}`}></img>
 			
 			<h1> {data?.name} </h1>
 			<ul>
@@ -27,7 +48,7 @@ const PokemonCard = ({pokemonID}) => {
 						<li key={index}>{entry?.type?.name}</li>
 					))
 				}
-			</ul>
+			</ul> */}
         </Card>
     );
 }
