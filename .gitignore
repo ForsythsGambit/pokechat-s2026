@@ -5,3 +5,5 @@ pages/*Solution.jsx
 solution
 archive
 build
+bulb.json
+__pycache__/

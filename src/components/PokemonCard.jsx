@@ -7,13 +7,27 @@ import axios from 'axios';
 
 const PokemonCard = ({pokemonID}) => {
     const [data, setData] = useState(null); // store the result here
-    useEffect(() => {
-        //AXIOS GET ON THE POKEAPI PT 
-    }, [pokemonID]);
+    console.log(pokemonID)
+	function getData()
+	{
+		axios.get(`${POKE_API}/pokemon/${pokemonID}`)
+		.then( (response) => {setData(response.data); console.log(response.data); } )
+		.catch((error) => (console.error(error)));
+	}
+	useEffect(getData, [pokemonID]);
     
     return (
         <Card>
-            {pokemonID}
+			<img src={data?.sprites?.front_default} alt={`Sprite of ${data?.name}`}></img>
+			
+			<h1> {data?.name} </h1>
+			<ul>
+				{
+					data?.types.map((entry, index) => (
+						<li key={index}>{entry?.type?.name}</li>
+					))
+				}
+			</ul>
         </Card>
     );
 }
