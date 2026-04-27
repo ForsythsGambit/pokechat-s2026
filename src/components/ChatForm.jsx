@@ -11,10 +11,12 @@ const ChatForm = ({setSearchResults})=>{
     const chat = ()=>{
 		if (!query)
 			return;
-		console.log(query)
+		console.log(`Query: ${query}`)
 		axios.get(`${CHAT_API}/chat/query`, {params: {query}})
-		.then( (response) => {setQuery(response); console.log(response); } )
-		.catch((error) => (console.log(error)));
+		.then( (response) => {
+			setQuery(response); console.log(`Reponse: ${response.getName}`)
+		} )
+		.catch((error) => (console.error(error)));
     }
 
 
@@ -27,9 +29,9 @@ const ChatForm = ({setSearchResults})=>{
 			onChange={(msg) => setQuery(msg.target.value)}
 			onKeyPress={(e) => e.key === 'Enter' && chat()}
         />
-        <Label pointing='above' message="strongest pokemon limit 1" onClick={() => {setQuery("Strongest pokemon limit 1"); chat();}}> Strongest Pokemon </Label>
-        <Label pointing='above' message="weakest pokemon limit 1" onClick={() => {setQuery("weakest pokemon limit 1"); chat();}}> Weakest Pokemon </Label>
-        <Label pointing='above' message="starter pokemon limit 3" onClick={() => {setQuery("starter pokemon limit 3"); chat();}}> Starter Pokemon </Label>
+        <Label pointing='above' message="strongest pokemon limit 1" onClick={() => {setQuery("Strongest pokemon limit 1");}}> Strongest Pokemon </Label>
+        <Label pointing='above' message="weakest pokemon limit 1" onClick={() => {setQuery("weakest pokemon limit 1");}}> Weakest Pokemon </Label>
+        <Label pointing='above' message="starter pokemon limit 3" onClick={() => {setQuery("starter pokemon limit 3");}}> Starter Pokemon </Label>
     </div>
     );
 }
