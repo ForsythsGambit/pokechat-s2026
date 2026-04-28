@@ -26,7 +26,7 @@ const PokemonCard = ({pokemonID}) => {
 						<Label key={index}>{entry?.type?.name}</Label>
 					))
 			}
-			<List divided>
+			<List divided>	
 				{
 					data?.stats.map( (entry, index) => (
 						<ListItem key={index}>
@@ -39,16 +39,6 @@ const PokemonCard = ({pokemonID}) => {
 				}
 			</List>
 			</Card.Content>
-			{/* <img src={data?.sprites?.front_default} alt={`Sprite of ${data?.name}`}></img>
-			
-			<h1> {data?.name} </h1>
-			<ul>
-				{
-					data?.types.map((entry, index) => (
-						<li key={index}>{entry?.type?.name}</li>
-					))
-				}
-			</ul> */}
         </Card>
     );
 }
