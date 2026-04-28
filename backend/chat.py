@@ -50,7 +50,7 @@ def hello():
 
 @app.route('/chat/query', methods=['GET'])
 def strongest():
-    query = request.args.get('q', 'ditto limit 1')
+    query = request.args.get('query', 'ditto limit 1')
     print(query)
     message_text = [
         {

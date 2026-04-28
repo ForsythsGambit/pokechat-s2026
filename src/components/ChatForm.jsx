@@ -14,7 +14,9 @@ const ChatForm = ({setSearchResults})=>{
 		console.log(`Query: ${query}`)
 		axios.get(`${CHAT_API}/chat/query`, {params: {query}})
 		.then( (response) => {
-			setQuery(response); console.log(`Reponse: ${response.getName}`)
+			setSearchResults(response.data.map( (entry) => (entry.id) ) ); 
+			setQuery("");
+			console.log(`Reponse: ${JSON.stringify(response)}`)
 		} )
 		.catch((error) => (console.error(error)));
     }
@@ -25,7 +27,7 @@ const ChatForm = ({setSearchResults})=>{
         <Input fluid 
 			icon={<Icon name='send' inverted circular link onClick={chat} />}
 			placeholder='Ask me a Pokemon Question...'
-			value = { query ? query  : ""}
+			value = { query ? query : ""}
 			onChange={(msg) => setQuery(msg.target.value)}
 			onKeyPress={(e) => e.key === 'Enter' && chat()}
         />
